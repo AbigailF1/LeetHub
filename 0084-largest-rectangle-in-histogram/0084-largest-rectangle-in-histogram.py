@@ -13,7 +13,6 @@ class Solution:
         area = 0
         for j in range(len(heights)):
             area = max(area, (heights[j]*(n_s[j] - p_s[j] -1)) )
-            print(heights[j],n_s[j], p_s[j], area)
         return area 
                 
         

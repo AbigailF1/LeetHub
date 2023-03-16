@@ -7,18 +7,18 @@
 class Solution:
     def longestUnivaluePath(self, root: Optional[TreeNode]) -> int:
         self.ans = 0
-        def longest(root):
+        def longest(root, parent):
             if not root:
                 return 0 
-            left = longest(root.left)
-            right = longest (root.right)
-            left_val = right_val = 0
-            if root.right and root.right.val == root.val:
-                right_val = right + 1
-                
-            if root.left and  root.left.val == root.val:
-                left_val = left + 1 
-            self.ans = max(self.ans, left_val + right_val)
-            return max(left_val, right_val)  
-        longest(root)  
+            left = longest(root.left, root.val)
+            right = longest (root.right, root.val)
+            
+            self.ans = max(self.ans, left + right)
+            
+            if root.val!= parent:
+                return 0
+            else:
+                return max(left, right) + 1
+            
+        longest(root, -2000)  
         return self.ans

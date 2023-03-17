@@ -1,16 +1,19 @@
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
-        ans = set()
+        ans = []
         nums.sort()
         def backtrack(indx, track):
             if indx >= n:
-                ans.add(tuple(track))
+                ans.append(track.copy())
                 return 
-            backtrack(indx+1,track)
-            backtrack(indx+1, track +[nums[indx]])
-        
+            track.append(nums[indx])
+            backtrack(indx+1, track)
+            while indx < n-1 and nums[indx]== nums[indx+1]:
+                indx+=1
+            track.pop()
+            backtrack(indx+1, track)
             
         n = len(nums)
         backtrack(0, [])
-        return list(ans)
+        return ans
         

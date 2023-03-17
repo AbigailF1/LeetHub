@@ -1,23 +1,21 @@
 class Solution:
     def splitString(self, s: str) -> bool:
-        ans =[]
-        t_f = False
-        def backtrack(candidate):
-            nonlocal t_f
-            if not (candidate):
+        ans = []
+        def backtrack(s):
+            if not s:
                 if len(ans) > 1:
-                    t_f = True 
-                return 
+                    return True 
+                return False
             
-            for j in range(1, len(candidate) + 1):
-                val = int(candidate[:j])
-                if len(ans) == 0 or int(ans[-1]) == val + 1:
-                    ans.append(val)
-                    backtrack(candidate[j:])
+            for i in range(1, len(s) +1 ):
+                if len(ans) == 0 or int(ans[-1]) == int(s[:i]) + 1:
+                    ans.append(int(s[:i]))
+                    if backtrack(s[i:]):
+                        return True
             if ans:
                 ans.pop()
             return 
+        return backtrack(s)
+        
                 
-        backtrack(s)
-        return t_f
         

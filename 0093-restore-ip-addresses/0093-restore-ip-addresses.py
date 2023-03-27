@@ -4,7 +4,8 @@ class Solution:
         res = []
         
         def backtrack(num):
-            
+            nonlocal ans 
+            nonlocal res
             if not num:
                 if len(ans) == 4 :
                     res.append(".".join(list(map(str,ans))))

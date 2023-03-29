@@ -1,16 +1,13 @@
 class Solution:
     def countBits(self, n: int) -> List[int]:
-        arr = []
-        for i in range(n+1):
-            no_ones = 0
-            element = i 
-            while element != 0:
-                if element % 2 != 0:
-                    no_ones += 1
-                    element = element // 2
-                else:
-                    element = element // 2
-            arr.append(no_ones)
+        arr = [0,1]
+        if n == 0:
+            return [0]
+        for i in range(2, n+1):
+            if i % 2 == 0:
+                arr.append(arr[i//2])
+            else:
+                 arr.append(arr[i//2] + 1)    
         return arr
                     
                      

@@ -1,16 +1,29 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:               
-        ans = []
-        def backtrack(num, List):
-            if len(num) == len(nums):
-                ans.append(num.copy())
+        
+        def visited(track, k):
+            return (track & (1<<k)) != 0
+        def off(track,k):
+            return track & ~(1<<k)
+        def on(track, k):
+            return track | (1<<k) 
+        
+        def backtrack(track, path):
+            if int.bit_count(track) == len(nums):
+                ans.append(path.copy())
                 return
-            else:                
-                for i in range(len(List)): 
-                    num.append(List[i])
-                    backtrack(num, List[:i] + List[i+1:])
-                    num.pop()
-        backtrack([], nums)
+                           
+            for i in range(len(nums)): 
+                if visited(track, i):
+                    continue
+                path.append(nums[i])    
+                track = on(track, i)
+                backtrack(track, path)
+                path.pop()
+                track = off(track, i)
+                
+        ans = []
+        backtrack(0, [])
         return ans
                 
 

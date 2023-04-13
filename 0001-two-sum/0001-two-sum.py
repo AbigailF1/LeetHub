@@ -13,7 +13,7 @@ class Solution:
         if y[l]!=y[r]:
             return [nums.index(y[l]),nums.index(y[r])]   
         else:
-           return [nums.index(y[l]),[i for i, n in enumerate(nums)if n==y[l]][1]]
+            return [nums.index(y[l]),[i for i, n in enumerate(nums)if n==y[l]][1]]
            
             
 

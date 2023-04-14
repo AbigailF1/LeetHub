@@ -9,19 +9,21 @@ class Employee:
 
 class Solution:
     def getImportance(self, employees: List['Employee'], id: int) -> int:
-        s = []
+        dic = defaultdict(int)
+        for i in range(len(employees)):
+            dic[employees[i].id] = i
         count = 0
-        dic = defaultdict(list)
-        for emp in employees:
-            dic[emp.id] = [emp.subordinates, emp.importance]
-            #print(dic)
-        s.append(id)
-        while s:
-            #print(s)
-            top = s.pop()
-            count += dic[top][1]
-            s+= dic[top][0]
-        return count 
+        def dfs(id, visited):
+            nonlocal count 
+            if id not in visited:
+                visited.add(id)
+            for i in employees[dic[id]].subordinates:
+                if i not in visited:
+                    dfs(i, visited)
+            count += employees[dic[id]].importance
+        dfs(id, set())         
+        return count
+    
                 
                 
             

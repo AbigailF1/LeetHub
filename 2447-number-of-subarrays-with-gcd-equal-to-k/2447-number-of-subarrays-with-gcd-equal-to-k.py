@@ -12,7 +12,7 @@ class Solution:
                 num = GCD(num, nums[j])
                 if num == k:
                     ans += 1
-                
-            
+                elif num < k:
+                    break    
         return ans 
             

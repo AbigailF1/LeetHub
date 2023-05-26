@@ -1,8 +1,15 @@
 class Solution:
     def fib(self, n: int) -> int:
-        if n==1: return 1
-        if n==0: return 0
-        return self.fib (n-1) + self.fib(n-2)
+        memo ={0:0, 1:1}
+        def f(n):
+            nonlocal memo
+            if n == 0 or n == 1:
+                return n
+            if n not in memo:
+                memo[n] = f(n-1) + f(n -2) 
+            return memo[n]
+        return f(n)
+    
         
             
             

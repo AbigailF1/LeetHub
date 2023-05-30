@@ -1,21 +1,11 @@
 class Solution:
-    def uniquePaths(self, m: int, n: int) -> int:
-        
-        graph = [[0] * (n + 1) for i in range(m)]
-        graph[m -1][n-1] = 1
-        
-        direc = [(0,1), (1,0)]
-        
-        def isvalid(x,y):
-            if 0 <= x < m and 0 <= y < n: return True
-            else: return False
-        
-        for j in range(n -1, -1, -1):
-            for i in range(m -1, -1, -1):
-                for k in direc:
-                    x = i + k[0]
-                    y = j + k[1]
-                    if isvalid(x,y):
-                        graph[i][j] += graph[x][y]
-        return graph[0][0]
-        
+    def uniquePaths(self, m: int, n: int) -> int: 
+        memo = defaultdict(int)
+        def dp(x,y):
+            if x + y <= 1: return 1
+            state = (x,y)
+            if state not in memo:
+                if x >= 1:memo[state] += dp(x-1,y)
+                if y >= 1: memo[state] += dp(x,y-1)
+            return memo[state]
+        return dp(n-1,m-1)

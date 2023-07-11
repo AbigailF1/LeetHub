@@ -14,7 +14,7 @@ var filter = function(arr, fn) {
             ans.push(arr[i])
         }
     }
-    console.log(new_arr)
+    // console.log(new_arr)
     return ans
     
 };

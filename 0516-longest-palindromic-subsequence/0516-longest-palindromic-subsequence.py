@@ -2,7 +2,6 @@ class Solution:
     def longestPalindromeSubseq(self, s: str) -> int:
         n = len(s) -1
         s2 = s[::-1]
-        print(s2)
         m = len(s2) - 1 
         memo = {}
         # dp function 

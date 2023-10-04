@@ -1,34 +1,23 @@
 class Solution:
     def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
-        graph2 = [[] for _ in range(numCourses)]
-        prereq = [0] * numCourses
-        visited = defaultdict(set)
-        for dep , notd in prerequisites:
-            graph2[notd].append(dep)
-            prereq[dep] += 1
+        dist = [[float('inf')] * numCourses for _ in range(numCourses)]
         
-        queue = deque()
-
-        ans = []
+        for i, j in prerequisites:
+            dist[i][j] = 1
+        
         for i in range(numCourses):
-            if prereq[i] == 0:
-                queue.append(i)
-
-        while queue:
-            x = queue.popleft()
-            for i in graph2[x]:
-                prereq[i] -= 1
-                for j in visited[x]:
-                    visited[i].add(j)
-                visited[i].add(x)
-                if prereq[i] == 0:
-                     queue.append(i)
+            dist[i][i] = 0
+            
+        for k in range(numCourses):
+            for i in range(numCourses):
+                for j in range(numCourses):
+                    
+                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+                    
+        ans = []
         for i, j in queries:
-            if j in visited[i]:
-                ans.append(True)
-            else:
+            if dist[i][j] == float("inf"):
                 ans.append(False)
-                    
-                    
+            else:
+                ans.append(True)
         return ans
-        

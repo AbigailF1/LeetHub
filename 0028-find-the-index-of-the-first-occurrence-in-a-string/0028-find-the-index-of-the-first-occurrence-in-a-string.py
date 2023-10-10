@@ -1,48 +1,39 @@
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
-        if len(needle)  > len(haystack):
+        if len(needle) > len(haystack):
             return -1
-       
-        n = len(needle) - 1
-        summ = 0
-        for letter in needle:
-            summ += (ord(letter) - 96) * (26 ** n)
-            n -= 1
-            
-        val = 0 
-        l,r = 0, 0
-        n = len(needle) - 1
+        lsp = [0 ]*  len(needle)
+        prev = 0
+        i = 1
         
-        for letter in haystack:
-            if (n < 0):
-                break
-            
-            val += (ord(haystack[r]) - 96) * (26 ** (n)) 
-            r += 1
-            n -= 1
+        while i < len(needle):
+            if needle[prev] == needle[i]:
+                lsp[i] = prev + 1
+                prev = lsp[i]
+                i += 1
+            else:
+                if prev != 0:
+                    prev = lsp[prev -1]
+                else:
+                    i += 1
         
-       
-        # print(r, l,  haystack[l:r+1])
-        n = len(needle) - 1
-        r = n + 1
-        
+        l, r = 0,0  
+        print(lsp)
         while(r < len(haystack)):
-            # print(val , summ, haystack[l:r+1])
-            if val == summ:
-                return l
             
-            val -= (26 ** n )* ((ord(haystack[l]) - 96))
-            val *= 26 
-            val += (ord(haystack[r]) - 96)
-                    
-            l += 1
-            r += 1
-           
-        if val == summ:
-            return l
-        
+            if l == len(needle):
+                return r - l
+            if l == 0 and haystack[r] != needle[l]:
+                r += 1
+            elif haystack[r] == needle[l]:
+                l+= 1
+                r+= 1
+            else:
+                l = lsp[l-1]
+        if l == len(needle):
+                return r - l
+            
         return -1
-            
             
             
             

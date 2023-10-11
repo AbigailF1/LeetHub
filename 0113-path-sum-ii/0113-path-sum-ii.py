@@ -8,33 +8,21 @@ class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
         res  = []
         
-        if root:
-            start = root.val
-            
-        def path(root, targetsum, arr):
-            nonlocal start
-            nonlocal res
+        def path(root, sum_, arr):
             
             if not root:
                 return 
             
-            arr.append(root.val)
-            ans = 0
-            # print(root.val,  not root.left  and root.right )
             if not root.left  and not root.right:
-                for i in range(len(arr) -1, -1, -1):
-                    ans += arr[i]
-                if ans == targetsum:
-                    # print(arr)
-                    if arr[i] == start :
-                        res.append(arr[i:])
+                if sum_ + root.val  == targetSum:
+                    res.append(arr + [root.val])
+                    return 
+    
+            path(root.left,sum_ + root.val, arr + [root.val])
+            path(root.right,sum_ + root.val, arr + [root.val])
+                     
 
-            # print(res)     
-            path(root.left,targetsum, arr)
-            path(root.right,targetsum, arr)
-            arr.pop()           
-
-        path(root, targetSum, []) 
+        path(root, 0, []) 
         
         return res
         

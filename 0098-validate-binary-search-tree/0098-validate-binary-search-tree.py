@@ -9,10 +9,14 @@ class Solution:
         def validity(Node, minimum = -inf, maximum = inf):
             if not Node:
                 return True 
+            
             if Node.val <= minimum or Node.val >= maximum:
                 return False 
+            
             left_validity= validity(Node.left, minimum, Node.val)
             right_validity = validity(Node.right, Node.val, maximum)
+            
             return left_validity and right_validity 
+        
         return validity(root)
         

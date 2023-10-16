@@ -1,21 +1,11 @@
 class Solution:
     def maxAlternatingSum(self, nums: List[int]) -> int:
+        sum_even, sum_odd = 0,0
         
-        dp = {}
+        for i in range(len(nums) -1, -1, -1):
+            temp_o = max(sum_even - nums[i], sum_odd)
+            temp_e = max(sum_odd + nums[i], sum_even)
+            
+            sum_even, sum_odd = temp_e, temp_o
         
-        def dfs(i, state):
-            if i == len(nums):
-                return 0
-            if (i,state) in dp:
-                return dp[(i,state)]
-            
-            if state:
-                summ = nums[i]
-            else:
-                summ = nums[i] * (-1)
-            
-            dp[(i,state)] = max(summ + dfs(i+1, 1 - state), dfs(i+1, state))
-            
-            return dp[(i,state)]
-        
-        return dfs(0, 1)
+        return sum_even

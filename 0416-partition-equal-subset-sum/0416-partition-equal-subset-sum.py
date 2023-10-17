@@ -7,20 +7,19 @@ class Solution:
         
         target //= 2
         
-        @cache
-        def dp(i, sum_):
-            if sum_ == target:
-                return True
-            
-            if i >= len(nums):
-                return False
-            
-            if sum_ > target:
-                return False
-            
-            return dp(i + 1, sum_+ nums[i]) or dp(i + 1 , sum_)
+        dp = [False for _ in range(target + 1)]
+        dp[0] = True
         
-        return dp(0, 0)
+        for num in nums:
+            for j in range(target, num -1, -1):
+                dp[j] = dp[j] or dp[j-num]
+            
+            if dp[target]:
+                return True
+        return False
+                
+
+        
             
             
         

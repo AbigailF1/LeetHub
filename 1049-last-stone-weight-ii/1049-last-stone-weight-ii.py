@@ -2,21 +2,18 @@ class Solution:
     def lastStoneWeightII(self, stones: List[int]) -> int:
         
         memo = {}
-        summ = sum(stones)
-        targ_summ = ceil(summ/2)
+        n = len(stones)
         
-        def recc(indx, tot_sum):
-            if tot_sum >= targ_summ:
-                return abs(tot_sum - (summ - tot_sum))
+        @cache
+        def dp(i, target):
             
-            if indx == len(stones):
-                return abs(tot_sum - (summ - tot_sum))
+            if i >= n:
+                 return target if target >= 0 else float('inf')
             
-            if (indx, tot_sum) in memo:
-                return memo[(indx, tot_sum)]
-            
-            
-            memo[(indx, tot_sum)]= min(recc(indx +  1, tot_sum + stones[indx] ), recc(indx +  1, tot_sum ))
-            return memo[(indx, tot_sum)]
+            x = min(dp(i+1, target + stones[i]),dp(i+1, target - stones[i]))             
+            return x
         
-        return recc(0,0)
+        return dp(0,0)
+                         
+            
+            

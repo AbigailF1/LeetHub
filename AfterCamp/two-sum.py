@@ -1,23 +1,25 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        l,r=0,len(nums)-1
-        y=sorted(nums)
+        dic = defaultdict(list)
+        for i in range(len(nums)):
+            dic[nums[i]].append(i)
         
-        while l<=r:
-            if y[l]+y[r]==target:
-                break
-            elif y[l]+y[r]>target:
-                r-=1
-            elif y[l]+y[r]<target:
-                l+=1
-        if y[l]!=y[r]:
-            return [nums.index(y[l]),nums.index(y[r])]   
+        l = 0
+        r = len(nums) -1
+        ans = [-1,-1]
+        nums.sort()
+        while (l < r):
+            print(l,r)
+            if nums[l] + nums[r] ==  target:
+                ans[0] = nums[l]
+                ans[1] = nums[r]
+                break 
+            elif nums[l] + nums[r] <  target:
+                l += 1
+            else:
+                r -= 1
+        # print(ans)
+        if ans[0] == ans[1]:
+            return dic[ans[0]]
         else:
-            return [nums.index(y[l]),[i for i, n in enumerate(nums)if n==y[l]][1]]
-           
-            
-
-
-        
-
-            
+            return [dic[ans[0]][0], dic[ans[1]][0]]
